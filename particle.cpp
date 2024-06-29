@@ -10,7 +10,11 @@ particle::particle(Eigen::Vector2d position, int type) {
 void particle::update(double dt, double friction, int max_x, int max_y)
 {
     position += velocety * dt;
-    velocety = velocety*friction + force * dt;
+    // [m]   =   [m/s]  *  [s]
+
+    velocety = velocety * friction + force * dt;
+    // [m/s]  = [m/s]   *   []   +   [m/s²]*[s]
+
     force = {0.0, 0.0};
 
     if (position[0]> max_x) {

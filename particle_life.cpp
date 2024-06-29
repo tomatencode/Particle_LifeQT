@@ -14,7 +14,6 @@ particle_life::particle_life(std::vector<particle> particles, std::vector<std::v
     this->max_x = max_x;
     this->max_y = max_y;
     this->stable_dist = stable_dist;
-
 }
 
 bool compare_x_pos(particle p1, particle p2)
@@ -33,11 +32,12 @@ void particle_life::update()
     int num_threads = std::min(16,num_particles);
     std::vector<std::thread> threads;
 
+    #pragma omp parallel for
     for (int i = 0; i < num_threads; i++) {
         double i_double = static_cast<double>(i);
         double num_particles_double = static_cast<double>(num_particles);
         double num_threads_double = static_cast<double>(num_threads);
-        threads.push_back(std::thread(&particle_life::apply_all_forces, this, static_cast<int>(num_particles_double/num_threads_double*i_double), static_cast<int>(num_particles_double/num_threads_double*(i_double+1.0)) ));
+        threads.push_back(std::thread(&particle_life::apply_all_forces, this, static_cast<int>(num_particles_double/num_threads_double*i_double), static_cast<int>(num_particles_double/num_threads_double*(i_double+1.0))));
     }
 
     for (auto &th : threads) {

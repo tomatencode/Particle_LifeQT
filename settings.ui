@@ -195,17 +195,20 @@
       <string>tps: 0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="time_running">
+    <widget class="QLabel" name="time_running_label">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>100</x>
        <y>10</y>
-       <width>181</width>
+       <width>191</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Time Running: 0 sec</string>
+      <string>Time Running: 0 sec </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="dt_label">
