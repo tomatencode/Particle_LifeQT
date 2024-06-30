@@ -9,11 +9,20 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
+    particle_life *particle_life_ptr;
+    particle_visualization *visualization;
+    bool paused;
+
     MainWindow();
     Settings *settings;
 
 private:
-    particle_visualization *visualization;
+    QPushButton *close_button;
+    void update();
+    void add_close_button();
+
+private slots:
+    void handleTogglePause(bool paused);
 };
 
 #endif // MAINWINDOW_H

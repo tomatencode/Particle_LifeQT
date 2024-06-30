@@ -22,9 +22,9 @@ private:
     int size;
     std::vector<QRect> particle_rects;
     std::vector<std::vector<QRect>> value_rects;
-    void update_rects();
     std::vector<QColor> particle_colors;
 
+    void update_rects();
     QColor interpolateColor(double value);
 };
 

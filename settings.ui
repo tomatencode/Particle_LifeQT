@@ -176,7 +176,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -262,38 +262,6 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="friction_label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>101</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Friction: 0.980</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="friction_slider">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>160</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>1000</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
     <widget class="QPushButton" name="play_pause_Button">
      <property name="geometry">
       <rect>
@@ -366,9 +334,9 @@
     <widget class="QPushButton" name="Reset_Button">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>180</x>
        <y>50</y>
-       <width>71</width>
+       <width>81</width>
        <height>25</height>
       </rect>
      </property>
@@ -425,7 +393,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>50</y>
        <width>121</width>
        <height>17</height>
       </rect>
@@ -438,7 +406,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>110</y>
+       <y>70</y>
        <width>160</width>
        <height>16</height>
       </rect>
@@ -457,7 +425,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>130</y>
+       <y>90</y>
        <width>141</width>
        <height>17</height>
       </rect>
@@ -467,6 +435,35 @@
      </property>
     </widget>
     <widget class="QSlider" name="stable_dist_slider">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>160</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="force_table" name="force_tb" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>250</width>
+       <height>250</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSlider" name="friction_slider">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -485,14 +482,30 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="force_table" name="force_tb" native="true">
+    <widget class="QLabel" name="friction_label">
      <property name="geometry">
       <rect>
-       <x>15</x>
-       <y>180</y>
-       <width>250</width>
-       <height>250</height>
+       <x>10</x>
+       <y>130</y>
+       <width>101</width>
+       <height>17</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>Friction: 0.980</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Random_tb_Button">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>150</y>
+       <width>91</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Random tb</string>
      </property>
     </widget>
    </widget>

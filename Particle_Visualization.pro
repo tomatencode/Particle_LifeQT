@@ -14,6 +14,7 @@ SOURCES += \
     mainwindow.cpp \
     particle.cpp \
     particle_life.cpp \
+    particle_life_state.cpp \
     particle_visualization.cpp \
     settings.cpp
 
@@ -22,6 +23,7 @@ HEADERS += \
     mainwindow.h \
     particle.h \
     particle_life.h \
+    particle_life_state.h \
     particle_visualization.h \
     settings.h
 

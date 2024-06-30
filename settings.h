@@ -17,13 +17,15 @@ class Settings : public QWidget, private Ui::Settings_Widget
 
 public:
     void update_lables();
-    explicit Settings(QWidget *parent = nullptr, particle_visualization *visualization = nullptr);
+    explicit Settings(QWidget *parent = nullptr, particle_visualization *visualization = nullptr, particle_life *particle_life_ptr = nullptr);
     QPalette pal;
 private:
     particle_visualization *visualization;
+    particle_life *particle_life_ptr;
     QTimer *timer;
     std::vector<double> last_tps;
     QTime start_time;
+    QTime t_last;
 private slots:
     void on_Reset_Button_clicked();
     void on_dt_slider_valueChanged(int value);
@@ -33,6 +35,10 @@ private slots:
     void on_stable_dist_slider_valueChanged(int value);
     void on_play_pause_Button_toggled(bool checked);
     void on_screenshot_Button_clicked();
+    void on_Random_tb_Button_clicked();
+    void on_tabWidget_currentChanged(int index);
+signals:
+    void togglePause(bool paused);
 };
 
 #endif // SETTINGS_H
