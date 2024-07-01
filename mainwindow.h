@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "particle_life_state.h"
 #include "settings.h"
 #include "particle_visualization.h"
 
@@ -20,6 +21,9 @@ private:
     QPushButton *close_button;
     void update();
     void add_close_button();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void handleTogglePause(bool paused);

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "particle_life.h"
-#include "qboxlayout.h"
+#include "particle_visualization.h"
 #include "settings.h"
 #include <QPushButton>
 
@@ -21,10 +21,9 @@ MainWindow::MainWindow() {
     state.reset_force_tb();
     state.reset_particles(800);
 
-    visualization = new particle_visualization(this, state);
-    setCentralWidget(visualization);
+    visualization = new particle_visualization(this, &state);
 
-    settings = new Settings(this, visualization, state);
+    settings = new Settings(this, visualization, &state);
     settings->move(50,50);  // Set the size and position of the settings widget
 
     connect(settings, &Settings::togglePause, this, &MainWindow::handleTogglePause);
@@ -38,6 +37,7 @@ MainWindow::MainWindow() {
     connect(timer, &QTimer::timeout, this, &MainWindow::update);
     timer->start(0);
 
+    setCentralWidget(visualization);
     show();
 }
 
@@ -46,7 +46,7 @@ void MainWindow::update()
     if (not paused)
     {
         visualization->update(); // Request repaint after update
-        particle_life::update(state); // update particle life if not paused
+        particle_life::update(state); // update particle state
         settings->update_lables();
     }
 }
@@ -65,32 +65,25 @@ void MainWindow::add_close_button()
 
     // Make the button transparent except for the icon
     close_button->setFlat(true);  // Removes the button border and background
-    close_button->setStyleSheet("background: transparent;");
+    close_button->setStyleSheet(
+        "QPushButton:pressed {"
+            "background-color: rgba(255, 0, 0, 0);"
+        "}"
+        );
 
     // Set the button size
     int buttonSize = 30; // Adjust size as needed
+    close_button->setIconSize(QSize(0.8*buttonSize, 0.8*buttonSize));
     close_button->setFixedSize(buttonSize, buttonSize);
 
-    // Create a layout for the top row
-    QWidget *topWidget = new QWidget(this);
-    QHBoxLayout *topLayout = new QHBoxLayout(topWidget);
-
-    // Add a spacer to push the button to the right
-    topLayout->addStretch();
-    topLayout->addWidget(close_button);
-
-    // Remove margins to ensure the button is at the very top-right corner
-    topLayout->setContentsMargins(0, 0, 0, 0);
-
-    // Create a main layout for the entire window
-    QWidget *centralWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-
-    // Add the top row layout and other widgets
-    mainLayout->addWidget(topWidget);
-    // Add other widgets to mainLayout as needed
-    setCentralWidget(centralWidget);
+    close_button->move(width() - 5, 5);
 
     // Connect the button's clicked signal to the close slot
     connect(close_button, &QPushButton::clicked, this, &QMainWindow::close);
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    QMainWindow::resizeEvent(event);
+    close_button->move(width() - close_button->width() - 5, 5);
 }

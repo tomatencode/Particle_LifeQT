@@ -2,6 +2,7 @@
 #define CALCULATORFORM_H
 
 
+#include "particle_life_state.h"
 #include "ui_settings.h"
 #include "particle_visualization.h"
 #include <QLabel>
@@ -17,11 +18,11 @@ class Settings : public QWidget, private Ui::Settings_Widget
 
 public:
     void update_lables();
-    explicit Settings(QWidget *parent = nullptr, particle_visualization *visualization = nullptr, particle_life_state state = particle_life_state());
+    explicit Settings(QWidget *parent = nullptr, particle_visualization *visualization = nullptr, particle_life_state *state = nullptr);
     QPalette pal;
 private:
     particle_visualization *visualization;
-    particle_life_state state;
+    particle_life_state *state;
     QTimer *timer;
     std::vector<double> last_tps;
     QTime start_time;

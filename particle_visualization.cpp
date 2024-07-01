@@ -12,9 +12,10 @@
 #include <QStandardPaths>
 #include <QDir>
 
-particle_visualization::particle_visualization(QWidget *parent, particle_life_state state)
-    : QWidget(parent), state(state)
+particle_visualization::particle_visualization(QWidget *parent, particle_life_state *state)
+    : QWidget(parent)
 {
+    this->state = state;
     // visualization parameters
     particle_visualization::colormap = {
         QColor(255,0,0),
@@ -25,6 +26,9 @@ particle_visualization::particle_visualization(QWidget *parent, particle_life_st
         QColor(255,255,0)
     };
 }
+
+particle_visualization::~particle_visualization()
+{}
 
 void particle_visualization::paintEvent(QPaintEvent *)
 {
@@ -37,7 +41,7 @@ void particle_visualization::paintEvent(QPaintEvent *)
 void particle_visualization::take_screenshot(double Quality)
 {
     // creates pixmap of current frame
-    QPixmap pixmap(state.size_x * Quality, state.size_y * Quality);
+    QPixmap pixmap(state->size_x * Quality, state->size_y * Quality);
 
     QPainter painter(&pixmap);
 
@@ -92,12 +96,12 @@ void particle_visualization::draw_particles_on_painter(QPainter &painter, double
 
     // draw background
     painter.setBrush(QBrush(QColor(10, 10, 10)));
-    painter.drawRect(0, 0, state.size_x * Quality, state.size_y * Quality);
+    painter.drawRect(0, 0, state->size_x * Quality, state->size_y * Quality);
     painter.setBrush(QBrush(QColor(25, 25, 25)));
-    painter.drawRect(0, 0, state.size_x * Quality, state.size_y * Quality);
+    painter.drawRect(0, 0, state->size_x * Quality, state->size_y * Quality);
 
     // draw particles
-    for (particle &particle : state.particles)
+    for (particle &particle : state->particles)
     {
         painter.setBrush(QBrush(colormap[particle.type]));
         painter.drawEllipse(QPointF(particle.position[0] * Quality, particle.position[1] * Quality), 2 * Quality, 2 * Quality);

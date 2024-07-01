@@ -13,10 +13,11 @@ class particle_visualization : public QWidget
 public:
     double size_particles;
     std::vector<QColor> colormap;
-    particle_life_state state;
+    particle_life_state *state;
 
     void take_screenshot(double Quality);
-    particle_visualization(QWidget *parent = nullptr, particle_life_state state = particle_life_state());
+    particle_visualization(QWidget *parent = nullptr, particle_life_state *state = nullptr);
+    ~particle_visualization();
 
 private:
     void draw_particles_on_painter(QPainter &painter, double Quality);
