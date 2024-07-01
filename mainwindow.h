@@ -9,7 +9,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    particle_life *particle_life_ptr;
+    particle_life_state state;
     particle_visualization *visualization;
     bool paused;
 

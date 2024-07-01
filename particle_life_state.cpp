@@ -1,7 +1,9 @@
 #include "particle_life_state.h"
 #include <random>
 
-particle_life_state::particle_life_state() {}
+particle_life_state::particle_life_state()
+    : force_range(0), stable_dist(0), friction(0), dt(0), size_x(0), size_y(0), num_particle_types(0)
+{}
 
 
 void particle_life_state::reset_particles(int num) {

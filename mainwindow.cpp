@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "particle_life.h"
 #include "qboxlayout.h"
 #include "settings.h"
 #include <QPushButton>
@@ -6,7 +7,6 @@
 MainWindow::MainWindow() {
 
     // particle life default parameters
-    particle_life_state state;
     state.dt = 0.08;
     state.force_range = 80;
     state.friction = 0.98;
@@ -21,13 +21,10 @@ MainWindow::MainWindow() {
     state.reset_force_tb();
     state.reset_particles(800);
 
-
-    particle_life_ptr = new particle_life(state);
-
-    visualization = new class particle_visualization(this, particle_life_ptr);
+    visualization = new particle_visualization(this, state);
     setCentralWidget(visualization);
 
-    settings = new Settings(this, visualization, particle_life_ptr);
+    settings = new Settings(this, visualization, state);
     settings->move(50,50);  // Set the size and position of the settings widget
 
     connect(settings, &Settings::togglePause, this, &MainWindow::handleTogglePause);
@@ -48,8 +45,8 @@ void MainWindow::update()
 {
     if (not paused)
     {
-        particle_life_ptr->update(); // update particle life if not paused
         visualization->update(); // Request repaint after update
+        particle_life::update(state); // update particle life if not paused
         settings->update_lables();
     }
 }
