@@ -1,13 +1,13 @@
-#include "force_table.h"
+#include "force_table_widget.h"
 
-force_table::force_table(QWidget *parent) : QWidget(parent),
-    size(0) {
-}
+force_table::force_table(QWidget *parent, particle_life_state *state) : QWidget(parent),
+    state(state), size(0)
+{}
 
 void force_table::setParticles(const std::vector<QColor>& colors) {
     particle_colors = colors;
     size = static_cast<int>(colors.size());
-    values.resize(size, std::vector<double>(size, 0));
+    state->force_tb.resize(size, std::vector<double>(size, 0));
     particle_colors = colors;
     update_rects();
     update();
@@ -37,7 +37,6 @@ void force_table::update_rects()
             value_rects[row][col] = QRect(circleRadius + col * cell_size + 5, circleRadius + row * cell_size + 5, cell_size-2, cell_size-2);
         }
     }
-
     update();
 }
 
@@ -60,10 +59,10 @@ void force_table::wheelEvent(QWheelEvent* event)
         for (int col = 0; col < size; ++col) {
             if (value_rects[row][col].contains(QPoint(event->position().x(), event->position().y()))){
                 if(event->angleDelta().y() > 0){ // up Wheel
-                    values[row][col] = qMax(-1.0f, qMin(1.0f, values[row][col] - 0.05));
+                    state->force_tb[row][col] = qMax(-1.0f, qMin(1.0f, state->force_tb[row][col] - 0.05));
                 }
                 else if(event->angleDelta().y() < 0){ //down Wheel
-                    values[row][col] = qMax(-1.0f, qMin(1.0f, values[row][col] + 0.05));
+                    state->force_tb[row][col] = qMax(-1.0f, qMin(1.0f, state->force_tb[row][col] + 0.05));
                 }
             }
         }
@@ -86,7 +85,7 @@ void force_table::paintEvent(QPaintEvent *event) {
     // Draw cells
     for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
-            painter.fillRect(value_rects[row][col], interpolateColor(values[row][col]));
+            painter.fillRect(value_rects[row][col], interpolateColor(state->force_tb[row][col]));
         }
     }
 }

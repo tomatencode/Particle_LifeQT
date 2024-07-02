@@ -9,7 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    force_table.cpp \
+    force_table_widget.cpp \
     main.cpp \
     mainwindow.cpp \
     particle.cpp \
@@ -19,7 +19,7 @@ SOURCES += \
     settings.cpp
 
 HEADERS += \
-    force_table.h \
+    force_table_widget.h \
     mainwindow.h \
     particle.h \
     particle_life.h \

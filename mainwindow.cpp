@@ -47,8 +47,8 @@ void MainWindow::update()
     {
         visualization->update(); // Request repaint after update
         particle_life::update(state); // update particle state
-        settings->update_lables();
     }
+    settings->update_lables();
 }
 
 void MainWindow::handleTogglePause(bool paused) {
@@ -76,7 +76,7 @@ void MainWindow::add_close_button()
     close_button->setIconSize(QSize(0.8*buttonSize, 0.8*buttonSize));
     close_button->setFixedSize(buttonSize, buttonSize);
 
-    close_button->move(width() - 5, 5);
+    close_button->move(width() - close_button->width() - 5, 5);
 
     // Connect the button's clicked signal to the close slot
     connect(close_button, &QPushButton::clicked, this, &QMainWindow::close);

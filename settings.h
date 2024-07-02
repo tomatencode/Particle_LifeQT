@@ -27,6 +27,8 @@ private:
     std::vector<double> last_tps;
     QTime start_time;
     QTime t_last;
+    QTime time_paused;
+    int secs_paused;
 private slots:
     void on_Reset_Button_clicked();
     void on_dt_slider_valueChanged(int value);

@@ -5,8 +5,6 @@
 #include <QIcon>
 
 void Settings::update_lables() {
-    // sets the force table of the simulation to the force table of the widet
-    this->state->force_tb = this->force_tb->values;
 
     // gets the avrage of the last 100 tps values and diplays them
 
@@ -38,15 +36,17 @@ void Settings::update_lables() {
     sable_dist_label->setText(QString::fromStdString("Stable Distance: " + std::to_string(state->stable_dist).substr(0, 4)));
 
     // displays Time Running
-    int time_running = start_time.secsTo(QTime::currentTime());
-    if (time_running < 60) {
-        time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running) + " sec"));
-    }
-    else if (time_running < 3600){
-        time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running/60) + " min " + std::to_string(time_running%60) + " sec"));
-    }
-    else {
-        time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running/3600) + " h " + std::to_string((time_running%3600)/60) + " min"));
+    if (not play_pause_Button->isChecked()) {
+        int time_running = start_time.secsTo(QTime::currentTime()) - secs_paused;
+        if (time_running < 60) {
+            time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running) + " sec"));
+        }
+        else if (time_running < 3600){
+            time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running/60) + " min " + std::to_string(time_running%60) + " sec"));
+        }
+        else {
+            time_running_label->setText(QString::fromStdString("Time Running: " + std::to_string(time_running/3600) + " h " + std::to_string((time_running%3600)/60) + " min"));
+        }
     }
     update();
 }
@@ -61,9 +61,11 @@ void Settings::on_play_pause_Button_toggled(bool checked)
     emit togglePause(checked);
     if (checked){
         play_pause_Button->setIcon(QIcon(":/icons/play_icon.png"));
+        time_paused = QTime::currentTime();
     }
     else {
         play_pause_Button->setIcon(QIcon(":/icons/pause_icon.png"));
+        secs_paused += time_paused.secsTo(QTime::currentTime());
     }
 }
 
@@ -88,7 +90,6 @@ void Settings::on_screenshot_Button_clicked()
 void Settings::on_Random_tb_Button_clicked()
 {
     state->reset_force_tb();
-    force_tb->values = state->force_tb;
 }
 
 void Settings::on_dt_slider_valueChanged(int value)
@@ -123,6 +124,7 @@ Settings::Settings(QWidget *parent, particle_visualization *visualization, parti
     start_time = QTime::currentTime();
     last_tps = {1.0};
     t_last = QTime::currentTime();
+    secs_paused = 0;
 
 
     // set default dlider values
@@ -132,8 +134,8 @@ Settings::Settings(QWidget *parent, particle_visualization *visualization, parti
     stable_dist_slider->setSliderPosition(((state->stable_dist-0.1)/0.7)*1000.0+1.0);
 
     // set default force tb
+    force_tb->state = state;
     force_tb->setParticles({visualization->colormap.begin(), visualization->colormap.begin()+state->num_particle_types});
-    force_tb->values = state->force_tb;
 }
 
 
