@@ -2,6 +2,7 @@
 #include "particle_life.h"
 #include "particle_visualization.h"
 #include "settings.h"
+#include "particle_interaction.h"
 #include <QPushButton>
 
 MainWindow::MainWindow() {
@@ -21,9 +22,12 @@ MainWindow::MainWindow() {
     state.reset_force_tb();
     state.reset_particles(800);
 
-    visualization = new particle_visualization(this, &state);
+    interaction = new particle_interaction(this);
+    this->installEventFilter(interaction);
 
-    settings = new Settings(this, visualization, &state);
+    visualization = new particle_visualization(this, &state, interaction);
+
+    settings = new Settings(this, interaction, visualization, &state);
     settings->move(50,50);  // Set the size and position of the settings widget
 
     connect(settings, &Settings::togglePause, this, &MainWindow::handleTogglePause);
@@ -45,6 +49,7 @@ void MainWindow::update()
 {
     if (not paused)
     {
+        interaction->apply_interaction(&state);
         visualization->update(); // Request repaint after update
         particle_life::update(state); // update particle state
     }

@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     particle.cpp \
+    particle_interaction.cpp \
     particle_life.cpp \
     particle_life_state.cpp \
     particle_visualization.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     force_table_widget.h \
     mainwindow.h \
     particle.h \
+    particle_interaction.h \
     particle_life.h \
     particle_life_state.h \
     particle_visualization.h \

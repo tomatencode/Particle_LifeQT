@@ -1,10 +1,10 @@
 #include "force_table_widget.h"
 
-force_table::force_table(QWidget *parent, particle_life_state *state) : QWidget(parent),
+force_table_widget::force_table_widget(QWidget *parent, particle_life_state *state) : QWidget(parent),
     state(state), size(0)
 {}
 
-void force_table::setParticles(const std::vector<QColor>& colors) {
+void force_table_widget::setParticles(const std::vector<QColor>& colors) {
     particle_colors = colors;
     size = static_cast<int>(colors.size());
     state->force_tb.resize(size, std::vector<double>(size, 0));
@@ -13,7 +13,7 @@ void force_table::setParticles(const std::vector<QColor>& colors) {
     update();
 }
 
-void force_table::update_rects()
+void force_table_widget::update_rects()
 {
     value_rects.resize(size, std::vector<QRect>(size, QRect(0,0,0,0)));
     particle_rects.resize(size*2,QRect(0,0,0,0));
@@ -40,7 +40,7 @@ void force_table::update_rects()
     update();
 }
 
-QColor force_table::interpolateColor(double value) {
+QColor force_table_widget::interpolateColor(double value) {
     // Ensure value is within the range [-1, 1]
     value = qMax(-1.0f, qMin(1.0f, value));
 
@@ -53,7 +53,7 @@ QColor force_table::interpolateColor(double value) {
     }
 }
 
-void force_table::wheelEvent(QWheelEvent* event)
+void force_table_widget::wheelEvent(QWheelEvent* event)
 {
     for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
@@ -69,7 +69,7 @@ void force_table::wheelEvent(QWheelEvent* event)
     }
 }
 
-void force_table::paintEvent(QPaintEvent *event) {
+void force_table_widget::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
 
     QPainter painter(this);

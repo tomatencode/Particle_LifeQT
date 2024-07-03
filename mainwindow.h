@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "particle_interaction.h"
 #include "particle_life_state.h"
 #include "settings.h"
 #include "particle_visualization.h"
@@ -12,6 +13,7 @@ class MainWindow : public QMainWindow {
 public:
     particle_life_state state;
     particle_visualization *visualization;
+    particle_interaction* interaction;
     bool paused;
 
     MainWindow();

@@ -35,6 +35,12 @@ void Settings::update_lables() {
     // displays Stable Dist
     sable_dist_label->setText(QString::fromStdString("Stable Distance: " + std::to_string(state->stable_dist).substr(0, 4)));
 
+    // displays Interaction Radius
+    radius_label->setText(QString::fromStdString("Radius: " + std::to_string(static_cast<int>(interaction->radius))));
+
+    // displays Interaction Strenght
+    strenght_label->setText(QString::fromStdString("Strenght: " + std::to_string(interaction->strenght).substr(0, 4)));
+
     // displays Time Running
     if (not play_pause_Button->isChecked()) {
         int time_running = start_time.secsTo(QTime::currentTime()) - secs_paused;
@@ -72,15 +78,14 @@ void Settings::on_play_pause_Button_toggled(bool checked)
 void Settings::on_tabWidget_currentChanged(int index)
 {
     if (index == 0) {
-        tabWidget ->resize(300,150);
+        tabWidget->resize(300,150);
     }
     else if (index == 1)
-        tabWidget ->resize(300,500);
+        tabWidget->resize(300,500);
     else {
-        tabWidget ->resize(300,500);
+        tabWidget->resize(300,180);
     }
 }
-
 
 void Settings::on_screenshot_Button_clicked()
 {
@@ -90,6 +95,35 @@ void Settings::on_screenshot_Button_clicked()
 void Settings::on_Random_tb_Button_clicked()
 {
     state->reset_force_tb();
+}
+
+void Settings::on_interaction_Button_clicked()
+{
+    interaction->mode =(interaction->mode+1)%3;
+    switch (interaction->mode) {
+    case 0:
+        interaction_Button->setText(QString("None"));
+        break;
+    case 1:
+        interaction_Button->setText(QString("Pull"));
+        break;
+    case 2:
+        interaction_Button->setText(QString("Push"));
+        break;
+    default:
+        break;
+    }
+}
+
+void Settings::on_strenght_slider_valueChanged(int value)
+{
+    interaction->strenght = value/1000.0;
+}
+
+
+void Settings::on_radius_slider_valueChanged(int value)
+{
+    interaction->radius = 20 + value/100.0 * 33.0;
 }
 
 void Settings::on_dt_slider_valueChanged(int value)
@@ -105,7 +139,7 @@ void Settings::on_friction_slider_valueChanged(int value)
 
 void Settings::on_force_range_slider_valueChanged(int value)
 {
-    state->force_range = 10.0 + static_cast<double>(value)/1000.0 * 140.0;
+    state->force_range = 10.0 + static_cast<double>(value)/100.0 * 14.0;
 }
 
 void Settings::on_stable_dist_slider_valueChanged(int value)
@@ -113,10 +147,10 @@ void Settings::on_stable_dist_slider_valueChanged(int value)
     state->stable_dist = 0.1 + static_cast<double>(value)/1000.0 * 0.7;
 }
 
-Settings::Settings(QWidget *parent, particle_visualization *visualization, particle_life_state *state)
+Settings::Settings(QWidget *parent, particle_interaction *interaction, particle_visualization *visualization, particle_life_state *state)
     : QWidget(parent)
 {
-
+    this->interaction = interaction;
     this->visualization = visualization;
     this->state = state;
     setupUi(this);
@@ -126,16 +160,16 @@ Settings::Settings(QWidget *parent, particle_visualization *visualization, parti
     t_last = QTime::currentTime();
     secs_paused = 0;
 
-
     // set default dlider values
     dt_slider->setSliderPosition(((state->dt-0.02)/0.18)*1000.0+1.0);
     friction_slider->setSliderPosition(((state->friction-0.95)/0.05)*1000.0+1.0);
     force_range_slider->setSliderPosition(((state->force_range-10.0)/140.0)*1000.0+1.0);
     stable_dist_slider->setSliderPosition(((state->stable_dist-0.1)/0.7)*1000.0+1.0);
+    radius_slider->setSliderPosition(((interaction->radius-20.0)/330.0)*1000.0+1.0);
+    strenght_slider->setSliderPosition(interaction->strenght*1000.0+1.0);
 
     // set default force tb
     force_tb->state = state;
     force_tb->setParticles({visualization->colormap.begin(), visualization->colormap.begin()+state->num_particle_types});
 }
-
 

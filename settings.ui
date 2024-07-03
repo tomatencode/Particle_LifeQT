@@ -453,7 +453,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="force_table" name="force_tb" native="true">
+    <widget class="force_table_widget" name="force_tb" native="true">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -513,14 +513,98 @@
     <attribute name="title">
      <string>interact</string>
     </attribute>
+    <widget class="QSlider" name="strenght_slider">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>160</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="interaction_Button">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>15</y>
+       <width>81</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="strenght_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Strenght</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="radius_slider">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>160</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="radius_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Radius</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="mode_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>51</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Mode:</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>force_table</class>
+   <class>force_table_widget</class>
    <extends>QWidget</extends>
-   <header>force_table.h</header>
+   <header>force_table_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

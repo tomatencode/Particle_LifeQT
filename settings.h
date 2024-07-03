@@ -5,6 +5,7 @@
 #include "particle_life_state.h"
 #include "ui_settings.h"
 #include "particle_visualization.h"
+#include "particle_interaction.h"
 #include <QLabel>
 #include <QPalette>
 #include <QTimer>
@@ -18,11 +19,12 @@ class Settings : public QWidget, private Ui::Settings_Widget
 
 public:
     void update_lables();
-    explicit Settings(QWidget *parent = nullptr, particle_visualization *visualization = nullptr, particle_life_state *state = nullptr);
+    explicit Settings(QWidget *parent = nullptr, particle_interaction* interaction = nullptr, particle_visualization *visualization = nullptr, particle_life_state *state = nullptr);
     QPalette pal;
 private:
     particle_visualization *visualization;
     particle_life_state *state;
+    particle_interaction  *interaction;
     QTimer *timer;
     std::vector<double> last_tps;
     QTime start_time;
@@ -40,6 +42,12 @@ private slots:
     void on_screenshot_Button_clicked();
     void on_Random_tb_Button_clicked();
     void on_tabWidget_currentChanged(int index);
+    void on_interaction_Button_clicked();
+
+    void on_strenght_slider_valueChanged(int value);
+
+    void on_radius_slider_valueChanged(int value);
+
 signals:
     void togglePause(bool paused);
 };

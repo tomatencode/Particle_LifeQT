@@ -1,5 +1,5 @@
-#ifndef force_table_H
-#define force_table_H
+#ifndef force_table_widget_H
+#define force_table_widget_H
 
 #include "particle_life_state.h"
 #include <QWidget>
@@ -7,11 +7,11 @@
 #include <QPainter>
 #include <vector>
 
-class force_table : public QWidget {
+class force_table_widget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit force_table(QWidget *parent = nullptr, particle_life_state *state = nullptr);
+    explicit force_table_widget(QWidget *parent = nullptr, particle_life_state *state = nullptr);
     particle_life_state *state;
     void setParticles(const std::vector<QColor>& colors);
 
@@ -29,4 +29,4 @@ private:
     QColor interpolateColor(double value);
 };
 
-#endif // force_table_H
+#endif // force_table_widget_H
