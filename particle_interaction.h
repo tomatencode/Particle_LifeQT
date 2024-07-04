@@ -9,15 +9,17 @@
 class particle_interaction : public QObject {
     Q_OBJECT
 public:
-    bool interacting;
+    particle_life_state *state;
     int mode;
+    int sub_mode;
     double radius;
     double strenght;
 
-    particle_interaction(QObject *parent = nullptr);
+    particle_interaction(QObject *parent = nullptr, particle_life_state *state  = nullptr);
+    void draw_interation_circle_on_painter(QPainter &painter);
 
 
-    void apply_interaction(particle_life_state *sate);
+    void apply_interaction();
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 };

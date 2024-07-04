@@ -2,15 +2,11 @@
 #include <random>
 
 particle_life_state::particle_life_state()
-    : force_range(0), stable_dist(0), friction(0), dt(0), size_x(0), size_y(0), num_particle_types(0)
+    : force_range(0), stable_dist(0), friction(0), dt(0), size_x(0), size_y(0), num_particle_types(0), num_particles(0)
 {}
 
 
-void particle_life_state::reset_particles(int num) {
-
-    if (num == -1) {
-        num = particles.size();
-    }
+void particle_life_state::reset_particles() {
 
     // innitilise the random number generators
     std::uniform_real_distribution<double> rand_x(0,size_x);
@@ -20,7 +16,7 @@ void particle_life_state::reset_particles(int num) {
 
     // spawn particles
     particles.clear();
-    for (int i = 0; i < num; i++) {
+    for (int i = 0; i < num_particles; i++) {
         particles.push_back(particle({rand_x(rd),rand_y(rd)},rand_type(rd)));
     }
 }

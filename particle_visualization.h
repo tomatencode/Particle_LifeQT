@@ -24,7 +24,6 @@ public:
 
 private:
     void draw_particles_on_painter(QPainter &painter, double Quality);
-    void draw_interation_circle_on_painter(QPainter &painter);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

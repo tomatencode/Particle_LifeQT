@@ -17,10 +17,11 @@ public:
     int size_x;
     int size_y;
     int num_particle_types;
+    int num_particles;
 
     particle_life_state();
 
-    void reset_particles(int num = -1);
+    void reset_particles();
     void reset_force_tb();
 };
 

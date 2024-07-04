@@ -24,7 +24,8 @@ particle_visualization::particle_visualization(QWidget *parent, particle_life_st
         QColor(0,0,255),
         QColor(255,0,255),
         QColor(0,255,255),
-        QColor(255,255,0)
+        QColor(255,255,0),
+        QColor(158, 52, 235)
     };
 }
 
@@ -37,7 +38,7 @@ void particle_visualization::paintEvent(QPaintEvent *)
     QPainter painter(this);
 
     draw_particles_on_painter(painter, 1.0);
-    draw_interation_circle_on_painter(painter);
+    interaction->draw_interation_circle_on_painter(painter);
 }
 
 void particle_visualization::take_screenshot(double Quality)
@@ -107,50 +108,5 @@ void particle_visualization::draw_particles_on_painter(QPainter &painter, double
     {
         painter.setBrush(QBrush(colormap[particle.type]));
         painter.drawEllipse(QPointF(particle.position[0] * Quality, particle.position[1] * Quality), 2 * Quality, 2 * Quality);
-    }
-}
-
-
-void particle_visualization::draw_interation_circle_on_painter(QPainter &painter)
-{
-    bool show = false;
-    QColor color;
-    int radius = interaction->radius;
-
-    switch (interaction->mode) {
-    case 0:
-        show = false;
-        break;
-    case 1:
-        show = true;
-        if (interaction->interacting) {
-            color = QColor(10,200,10,120);
-        }
-        else {
-            color = QColor(20,100,20,120);
-        }
-        break;
-    case 2:
-        show = true;
-        if (interaction->interacting) {
-            color = QColor(240,10,10,120);
-        }
-        else {
-            color = QColor(150,20,20,120);
-        }
-        break;
-    default:
-        break;
-    }
-
-    if (show) {
-        painter.setBrush(Qt::NoBrush);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(QPen(color,2));
-
-        QScreen *screen = QApplication::screens().at(0);
-        QPoint pos_mouse = QCursor::pos(screen);
-
-        painter.drawEllipse(pos_mouse, radius, radius);
     }
 }

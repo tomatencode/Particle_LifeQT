@@ -13,6 +13,7 @@ MainWindow::MainWindow() {
     state.friction = 0.98;
     state.stable_dist = 0.3;
     state.num_particle_types = 5;
+    state.num_particles = 800;
 
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect  screenGeometry = screen->geometry();
@@ -20,9 +21,9 @@ MainWindow::MainWindow() {
     state.size_y = screenGeometry.height();
 
     state.reset_force_tb();
-    state.reset_particles(800);
+    state.reset_particles();
 
-    interaction = new particle_interaction(this);
+    interaction = new particle_interaction(this, &state);
     this->installEventFilter(interaction);
 
     visualization = new particle_visualization(this, &state, interaction);
@@ -49,10 +50,12 @@ void MainWindow::update()
 {
     if (not paused)
     {
-        interaction->apply_interaction(&state);
-        visualization->update(); // Request repaint after update
-        particle_life::update(state); // update particle state
+        interaction->apply_interaction();
+        particle_life::update(state);
+        particle_life::update_all_partclies(state);
+        particle_life::auto_dt(state);
     }
+    visualization->update(); // Request repaint after update
     settings->update_lables();
 }
 

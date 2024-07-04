@@ -7,7 +7,12 @@ force_table_widget::force_table_widget(QWidget *parent, particle_life_state *sta
 void force_table_widget::setParticles(const std::vector<QColor>& colors) {
     particle_colors = colors;
     size = static_cast<int>(colors.size());
-    state->force_tb.resize(size, std::vector<double>(size, 0));
+    if (size > static_cast<int>(state->force_tb.size())) {
+        state->force_tb.resize(size, std::vector<double>());
+        for (std::vector<double> &row : state->force_tb) {
+            row.resize(size,0.0);
+        }
+    }
     particle_colors = colors;
     update_rects();
     update();
@@ -16,6 +21,9 @@ void force_table_widget::setParticles(const std::vector<QColor>& colors) {
 void force_table_widget::update_rects()
 {
     value_rects.resize(size, std::vector<QRect>(size, QRect(0,0,0,0)));
+    for (std::vector<QRect> &row : value_rects) {
+        row.resize(size, QRect(0,0,0,0));
+    }
     particle_rects.resize(size*2,QRect(0,0,0,0));
 
     int cell_size = static_cast<double>(this->width(),this->height())/(static_cast<double>(particle_colors.size())+1.0);

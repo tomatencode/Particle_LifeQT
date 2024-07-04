@@ -13,6 +13,8 @@ namespace particle_life {
     double get_force(particle_life_state &state, double dist, int type_p1, int type_p2);
     Eigen::Vector2d get_dist(particle_life_state &state, const particle p1, const particle p2);
     void apply_force(particle_life_state &state, particle& p1, particle& p2);
+    void update_all_partclies(particle_life_state &state);
+    void auto_dt(particle_life_state &state);
 }
 
 

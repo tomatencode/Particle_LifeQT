@@ -32,7 +32,6 @@ private:
     QTime time_paused;
     int secs_paused;
 private slots:
-    void on_Reset_Button_clicked();
     void on_dt_slider_valueChanged(int value);
     void on_friction_slider_valueChanged(int value);
     void on_force_range_slider_valueChanged(int value);
@@ -43,10 +42,9 @@ private slots:
     void on_Random_tb_Button_clicked();
     void on_tabWidget_currentChanged(int index);
     void on_interaction_Button_clicked();
-
     void on_strenght_slider_valueChanged(int value);
 
-    void on_radius_slider_valueChanged(int value);
+    void on_types_spinBox_valueChanged(int arg1);
 
 signals:
     void togglePause(bool paused);

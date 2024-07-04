@@ -4,6 +4,15 @@
 #include <algorithm>
 #include <functional>  // For std::ref
 
+
+void particle_life::update_all_partclies(particle_life_state &state)
+{
+    for (particle &p : state.particles)
+    {
+        p.update(state.dt, state.friction, state.size_x, state.size_y);
+    }
+}
+
 bool compare_x_pos(particle p1, particle p2)
 {
     return p1.position[0] > p2.position[0];
@@ -35,18 +44,16 @@ void particle_life::update(particle_life_state &state)
 
 void particle_life::apply_all_forces(particle_life_state &state, int start_num, int end_num)
 {
-    int num_particles = state.particles.size();
     for (int i=start_num;i< end_num;i++)
     {
-        int j = (i+1)%num_particles;
+        int j = (i+1)%state.num_particles;
 
         while (get_dist(state, state.particles[i], state.particles[j])[0] < state.force_range and i != j)
         {
             apply_force(state, state.particles[j], state.particles[i]);
 
-            j = (j+1)%num_particles;
+            j = (j+1)%state.num_particles;
         }
-        state.particles[i].update(state.dt, state.friction, state.size_x, state.size_y);
     }
 }
 
@@ -86,7 +93,6 @@ double particle_life::get_force(particle_life_state &state, double dist, int typ
 void particle_life::apply_force(particle_life_state &state, particle& p1, particle& p2)
 {
     Eigen::Vector2d diff = get_dist(state, p2, p1);
-
 
     if (diff[1] < state.force_range)
     {
@@ -131,3 +137,17 @@ Eigen::Vector2d particle_life::get_dist(particle_life_state &state, const partic
     return {x_diff , y_diff};
 }
 
+void particle_life::auto_dt(particle_life_state &state) {
+    double v_max = 0;
+    for (particle &p : state.particles) {
+        double len = p.velocety.norm();
+        if (len > v_max) {
+            v_max = len;
+        }
+    }
+    if (v_max > 0) {
+        state.dt = state.force_range / v_max;
+    } else {
+        state.dt = 0.08;  // Handle the case when v_max is zero
+    }
+}
