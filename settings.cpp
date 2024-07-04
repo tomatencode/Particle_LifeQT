@@ -1,5 +1,4 @@
 #include "settings.h"
-#include <algorithm>
 #include <QWidget>
 #include <QPalette>
 #include <string>
@@ -26,9 +25,6 @@ void Settings::update_lables() {
     // displays num particles
     int num = state->particles.size();
     num_particles_label->setText(QString::fromStdString("Particles: " + std::to_string(num)));
-
-    // displays num Types
-    num_types_label->setText(QString::fromStdString("Types: " + std::to_string(state->num_particle_types)));
 
     // displays Force Range
     force_range_label->setText(QString::fromStdString("Force Range: " + std::to_string(static_cast<int>(state->force_range))));

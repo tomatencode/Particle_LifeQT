@@ -53,7 +53,7 @@ void MainWindow::update()
         interaction->apply_interaction();
         particle_life::update(state);
         particle_life::update_all_partclies(state);
-        particle_life::auto_dt(state);
+        //particle_life::auto_dt(state);
     }
     visualization->update(); // Request repaint after update
     settings->update_lables();

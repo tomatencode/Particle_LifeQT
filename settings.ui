@@ -388,12 +388,12 @@ QSpinBox::down-arrow {
       <rect>
        <x>160</x>
        <y>10</y>
-       <width>67</width>
+       <width>51</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Types: 0</string>
+      <string>Types:</string>
      </property>
     </widget>
     <widget class="Line" name="line_particles">
@@ -537,8 +537,8 @@ QSpinBox::down-arrow {
     <widget class="QSpinBox" name="types_spinBox">
      <property name="geometry">
       <rect>
-       <x>226</x>
-       <y>46</y>
+       <x>206</x>
+       <y>5</y>
        <width>40</width>
        <height>26</height>
       </rect>
@@ -554,19 +554,6 @@ QSpinBox::down-arrow {
      </property>
      <property name="minimum">
       <number>1</number>
-     </property>
-    </widget>
-    <widget class="QLabel" name="types_label">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>50</y>
-       <width>51</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Types:</string>
      </property>
     </widget>
    </widget>
