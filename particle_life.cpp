@@ -44,15 +44,18 @@ void particle_life::update(particle_life_state &state)
 
 void particle_life::apply_all_forces(particle_life_state &state, int start_num, int end_num)
 {
+    std::vector<particle*> neighbors_x;
     for (int i=start_num;i< end_num;i++)
     {
-        int j = (i+1)%state.num_particles;
-
-        while (get_dist(state, state.particles[i], state.particles[j])[0] < state.force_range and i != j)
+        for (int j = (i+neighbors_x.size()+1)%state.num_particles; get_dist(state, state.particles[i], state.particles[j])[0] < state.force_range and i != j; j = (j+1)%state.num_particles)
         {
-            apply_force(state, state.particles[j], state.particles[i]);
-
-            j = (j+1)%state.num_particles;
+            neighbors_x.push_back(&state.particles[j]);
+        }
+        for (particle* neighbor : neighbors_x) {
+            apply_force(state, *neighbor, state.particles[i]);
+        }
+        if (not neighbors_x.empty()) {
+            neighbors_x.erase(neighbors_x.begin());
         }
     }
 }
@@ -96,7 +99,7 @@ void particle_life::apply_force(particle_life_state &state, particle& p1, partic
 
     if (diff[1] < state.force_range)
     {
-        double dist = sqrt(diff.dot(diff));
+        double dist = diff.norm();
         if (dist < state.force_range and dist != 0.0)
         {
             Eigen::Vector2d normal = diff / dist;
