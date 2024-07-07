@@ -5,6 +5,8 @@ particle::particle(Eigen::Vector2d position, int type) {
     this->velocety = {0.0,0.0};
     this->force = {0.0, 0.0};
     this->type = type;
+    pos_x_list = 0;
+    pos_y_list = 0;
 }
 
 void particle::update(double dt, double friction, int max_x, int max_y)

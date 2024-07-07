@@ -9,7 +9,7 @@ MainWindow::MainWindow() {
 
     // particle life default parameters
     state.dt = 0.08;
-    state.force_range = 80;
+    state.force_range = 120;
     state.friction = 0.98;
     state.stable_dist = 0.3;
     state.num_particle_types = 5;

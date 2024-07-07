@@ -10,6 +10,9 @@ public:
     Eigen::Vector2d velocety;
     Eigen::Vector2d force;
     int type;
+
+    int pos_x_list;
+    int pos_y_list;
     particle(Eigen::Vector2d position, int type);
     void update(double dt, double friction, int max_x, int max_y);
 };

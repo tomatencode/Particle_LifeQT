@@ -63,8 +63,7 @@ void particle_interaction::apply_interaction()
                         y = rand_y(rd);
                     } while (sqrt(particle_life::get_dist(*state, particle({m_x,m_y},0), particle({x,y},0)).dot(particle_life::get_dist(*state, particle({m_x,m_y},0), particle({x,y},0))))>radius);
 
-                    state->particles.push_back(particle({x, y},rand_type(rd)));
-                    state->num_particles++;
+                    state->add_particle(particle({x, y},rand_type(rd)));
                 }
             }
             else if (sub_mode == 2) {
@@ -73,8 +72,7 @@ void particle_interaction::apply_interaction()
                 for (int i = 0; i < state->num_particles; i++) {
                     if (sqrt(particle_life::get_dist(*state, particle({m_x,m_y},0), state->particles[i]).dot(particle_life::get_dist(*state, particle({m_x,m_y},0), state->particles[i])))<radius) {
                         if (rm(rd) < pow(strenght/radius*100, 3)+0.05*strenght) {
-                            state->particles.erase(state->particles.begin()+i);
-                            state->num_particles -= 1;
+                            state->remove_particle(i);
                         }
                     }
                 }
